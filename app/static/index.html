@@ -1,0 +1,100 @@
+<!doctype html><html lang="cs"><head>
+<meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="/styles/style-admin.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<title>Optimalizátor fotografií</title>
+</head><body class="bg-white text-slate-900">
+<div class="admin-title">
+  <div class="left-side"><div class="text">
+    <a href="/" style="color:black; text-decoration:none;">ObsahovkaTools</a>
+    <div class="subtitle">powered by <a href="https://visio-net.eu" target="_blank">VisioNet</a></div>
+  </div></div>
+  <div class="middle-side"></div>
+  <div class="right-side"><ul>
+    <li><a href="https://crew.obsahovka.eu/wiki/"><img class="avatar" src="/images/wiki.png"></a></li>
+  </ul></div>
+</div>
+
+<a href="/imgopt/admin" class="fixed bottom-6 right-6 inline-flex items-center gap-2 rounded-xl border border-slate-300 px-4 py-2 text-sm font-medium hover:bg-slate-50 transition shadow">Admin</a>
+
+<main class="max-w-6xl mx-auto px-4 py-6">
+  <h1 class="text-2xl font-semibold mb-4">Optimalizátor fotografií</h1>
+  <form id="uploadForm" class="space-y-4 border rounded-2xl p-4 bg-white">
+  <div class="flex items-center gap-3">
+    <span class="text-sm">Režim:</span>
+    <label class="inline-flex items-center cursor-pointer select-none">
+      <span id="labelA" class="me-3 text-sm text-slate-900">Ze sloupce A</span>
+      <input id="modeSwitch" name ="mode" value="table" type="checkbox" class="sr-only peer" checked>
+      <div class="relative w-14 h-7 rounded-full bg-sky-500 transition peer-checked:bg-emerald-500
+                  after:content-[''] after:absolute after:top-[3px] after:start-[3px]
+                  after:h-5 after:w-5 after:rounded-full after:bg-white after:shadow after:transition-all
+                  peer-checked:after:translate-x-7">
+      </div>
+      <span id="labelTable" class="ms-3 text-sm text-slate-500">Ze zalistovací tabulky</span>
+    </label>
+    <input type="hidden" name="mode" id="modeHidden" value="table">
+  </div>
+
+  <div class="flex items-center gap-3">
+    <input id="fileInput" name="file" type="file" accept=".xlsx" class="block w-full text-sm file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-slate-100 file:text-slate-700">
+    <button id="uploadBtn" type="submit" class="px-4 py-2 rounded-lg bg-slate-900 text-white hover:bg-slate-800">Nahrát</button>
+  </div>
+  <p id="uploadMsg" class="text-sm text-slate-600"></p>
+</form>
+
+<div class="flex items-center justify-between mt-8">
+  <h2 class="text-lg font-semibold">Dávky</h2>
+  <button id="refreshBtn"
+          class="inline-flex items-center gap-2 rounded-xl border border-slate-300 bg-white
+                 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50 transition shadow-sm">
+    Obnovit
+  </button>
+</div>
+
+  <div class="mt-3 overflow-auto border rounded-2xl">
+    <table class="min-w-full text-sm">
+      <thead class="bg-slate-50"><tr>
+        <th class="p-3 text-left">ID</th>
+        <th class="p-3 text-left">Stav</th>
+        <th class="p-3 text-left">Progress</th>
+        <th class="p-3 text-left">Soubor</th>
+        <th class="p-3 text-left">Vytvořeno</th>
+        <th class="p-3 text-left">Akce</th>
+      </tr></thead>
+      <tbody id="batchesBody"></tbody>
+    </table>
+  </div>
+</main>
+
+<script src="/imgopt/static/app.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const sw = document.getElementById('modeSwitch');
+  const hidden = document.getElementById('modeHidden');
+  const labelA = document.getElementById('labelA');
+  const labelT = document.getElementById('labelTable');
+
+  function syncSwitch() {
+    hidden.value = sw.checked ? 'table' : 'A';
+    labelA.classList.toggle('text-slate-900', !sw.checked);
+    labelA.classList.toggle('text-slate-500', sw.checked);
+    labelT.classList.toggle('text-slate-900', sw.checked);
+    labelT.classList.toggle('text-slate-500', !sw.checked);
+  }
+  sw.addEventListener('change', syncSwitch);
+  syncSwitch();
+
+  const refresh = document.getElementById('refreshBtn');
+  if (refresh) {
+    refresh.addEventListener('click', function (e) {
+      e.preventDefault();
+      if (typeof window.fetchBatches === 'function') {
+        window.fetchBatches();
+      } else {
+        window.location.reload();
+      }
+    });
+  }
+});
+</script>
+</body></html>

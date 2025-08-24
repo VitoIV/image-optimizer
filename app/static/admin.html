@@ -1,0 +1,45 @@
+<!doctype html><html lang="cs"><head>
+<meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="/styles/style.css"><link rel="stylesheet" href="/styles/style-admin.css">
+<script src="https://cdn.tailwindcss.com/3.4.9"></script>
+<title>Admin</title></head><body class="bg-white text-slate-900">
+<div class="admin-title">
+  <div class="left-side"><div class="text"><a href="/" style="color:black; text-decoration:none;">ObsahovkaTools</a>
+  <div class="subtitle">powered by <a href="https://visio-net.eu" target="_blank">VisioNet</a></div></div></div>
+  <div class="middle-side"></div>
+  <div class="right-side"><ul>
+    <li><a href="#" id="_x-open-report"><img class="avatar" src="/images/bug.png" alt=""></a></li>
+    <li><a href="https://crew.obsahovka.eu/wiki/"><img class="avatar" src="/images/wiki.png"></a></li>
+  </ul></div>
+</div>
+
+<main class="max-w-6xl mx-auto px-4 py-6 space-y-6">
+  <h1 class="text-2xl font-semibold">Admin</h1>
+  <section class="border rounded-2xl p-4">
+    <h2 class="font-medium mb-2">Workers</h2>
+    <div class="flex gap-3 items-end">
+      <div><label class="block text-sm">Počet workerů</label><input id="workersCount" type="number" min="0" value="2" class="border rounded-lg px-3 py-2 w-28"></div>
+      <button id="setWorkersBtn" class="px-4 py-2 rounded-lg bg-slate-900 text-white hover:bg-slate-800">Nastavit</button>
+    </div>
+  </section>
+  <section class="border rounded-2xl p-4">
+    <h2 class="font-medium mb-2">Thready</h2>
+    <div class="flex gap-3 items-end">
+      <div><label class="block text-sm">Threadů na worker</label><input id="threadsCount" type="number" min="1" value="8" class="border rounded-lg px-3 py-2 w-28"></div>
+      <button id="setThreadsBtn" class="px-4 py-2 rounded-lg bg-slate-900 text-white hover:bg-slate-800">Nastavit</button>
+    </div>
+  </section>
+  <section class="border rounded-2xl p-4">
+    <h2 class="font-medium mb-2">Retention & Purge</h2>
+    <div class="flex gap-4 items-center flex-wrap">
+      <div><label class="block text-sm">RETENTION_DAYS</label><input id="retentionDays" type="number" min="1" value="30" class="border rounded-lg px-3 py-2 w-28"></div>
+      <div class="flex items-center gap-2"><input id="autoPurge" type="checkbox"><label for="autoPurge">Auto purge</label></div>
+      <button id="saveRetentionBtn" class="px-4 py-2 rounded-lg bg-slate-900 text-white hover:bg-slate-800">Uložit</button>
+      <button id="purgeBtn" class="px-4 py-2 rounded-lg bg-amber-600 text-white hover:bg-amber-500">Spustit úklid</button>
+    </div>
+    <p class="text-xs text-slate-500 mt-2">Auto purge je ve výchozím stavu vypnutý.</p>
+  </section>
+  <form id="logoutForm" class="pt-8"><button class="text-sm text-slate-600 hover:underline" type="submit">Odhlásit</button></form>
+</main>
+<script src="/imgopt/static/admin.js"></script>
+</body></html>

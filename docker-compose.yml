@@ -1,0 +1,28 @@
+services:
+  web:
+    build: .
+    container_name: imageopt-web
+    env_file: .env
+    ports:
+      - "${APP_BIND_PORT:-18085}:8000"
+    depends_on: [redis]
+    volumes:
+      - ./data:/app/data
+
+  worker:
+    build: .
+    container_name: imageopt-worker
+    env_file: .env
+    depends_on: [redis]
+    command: ["python", "-m", "app.worker_supervisor"]
+    volumes:
+      - ./data:/app/data
+
+  redis:
+    image: redis:7-alpine
+    container_name: imageopt-redis
+    volumes:
+      - redis-data:/data
+
+volumes:
+  redis-data:
